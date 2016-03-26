@@ -14,8 +14,6 @@ tic_tac_toe::tic_tac_toe()
     //случайное значение (0 или 1)
     srand(time(NULL));
     isCompFirst = rand() % 2;
-
-    this->SetColor(White, Black);
 }
 
 int tic_tac_toe::getWinCell(char mark)
@@ -41,7 +39,6 @@ int tic_tac_toe::getWinCell(char mark)
         //если в строке не хватает одного символа, возвращаем номер его ячейки
         if (nrow == 2)
         {
-            std::cout << "строка!" << std::endl;
             return result;
         }
     }
@@ -64,7 +61,6 @@ int tic_tac_toe::getWinCell(char mark)
         //если в столбце не хватает одного символа, возвращаем номер его ячейки
         if (ncol == 2)
         {
-            std::cout << "столбец!" << std::endl;
             return result;
         }
     }
@@ -83,7 +79,6 @@ int tic_tac_toe::getWinCell(char mark)
     }
     if (ngl == 2)
     {
-        std::cout << "главная!" << std::endl;
         return result;
     }
     //проверяем побочную диагональ
@@ -101,7 +96,6 @@ int tic_tac_toe::getWinCell(char mark)
     }
     if (npob == 2)
     {
-        std::cout << "побочная!" << std::endl;
         return result;
     }
     return 0;
@@ -109,21 +103,21 @@ int tic_tac_toe::getWinCell(char mark)
 
 void tic_tac_toe::play()
 {
-    std::cout << std::endl << "Игра началась!" << std::endl;
+    std::cout << std::endl << "The game has begun!" << std::endl;
     this->draw(field);
     if (isCompFirst)
     {
-        std::cout << "Вы играете О, ход компьютера..." << std::endl;
+        std::cout << "You are O, computer's move..." << std::endl;
         do
         {
-            std::cout << std::endl  << "Компьютер делает ход:" << std::endl;
+            std::cout << std::endl  << "Computer makes his move:" << std::endl;
             this->move();
             this->draw(field);
             if (this->checkIfEnd() != '+')
                 break;
             std::cout << std::endl;
             this->draw(field_full);
-            std::cout << std::endl  << "Сделайте ваш ход:" << std::endl;
+            std::cout << std::endl  << "Make your move:" << std::endl;
             this->getMove();
             this->draw(field);
         }
@@ -131,17 +125,17 @@ void tic_tac_toe::play()
     }
     else
     {
-        std::cout << "Вы играете X, ваш ход... " << std::endl;
+        std::cout << "You are X, your move..." << std::endl;
         do
         {
             std::cout << std::endl;
             this->draw(field_full);
-            std::cout << std::endl  << "Сделайте ваш ход:" << std::endl;
+            std::cout << std::endl  << "Make your move:" << std::endl;
             this->getMove();
             this->draw(field);
             if (this->checkIfEnd() != '+')
                 break;
-            std::cout << std::endl << "Компьютер делает ход:" << std::endl;
+            std::cout << std::endl << "Computer makes his move:" << std::endl;
             this->move();
             this->draw(field);
         }
@@ -149,15 +143,15 @@ void tic_tac_toe::play()
     }
     if (this->checkIfEnd() == 'X')
     {
-        std::cout << "X победил!" << std::endl;
+        std::cout << "X wins!" << std::endl;
     }
     else if (this->checkIfEnd() == 'O')
     {
-        std::cout << "O победил!" << std::endl;
+        std::cout << "O wins!" << std::endl;
     }
     else
     {
-        std::cout << "Ничья!" << std::endl;
+        std::cout << "Draw!" << std::endl;
     }
 }
 
@@ -166,7 +160,7 @@ void tic_tac_toe::getMove()
     int num;
     do
     {
-        std::cout << "Введите номер ячейки для хода: ";
+        std::cout << "Input number of cell to make move: ";
         std::cin >> num;
     }
     while (field[num / 3][num % 3 - 1] != '-');
@@ -188,7 +182,21 @@ void tic_tac_toe::draw(char field[][3])
         std::cout << '|';
         for (int j = 0; j < 3; j++)
         {
-            std::cout << field[i][j] << '|';
+            if (field[i][j] == 'X')
+            {
+                this->SetColor(Red, White);
+            }
+            else if (field[i][j] == 'O')
+            {
+                this->SetColor(Magenta, White);
+            }
+            else
+            {
+                this->SetColor(Black, White);
+            }
+            std::cout << field[i][j];
+            this->SetColor(Black, White);
+            std::cout << '|';
         }
         std::cout << std::endl;
     }
@@ -234,5 +242,6 @@ char tic_tac_toe::checkIfEnd()
 
 void tic_tac_toe::SetColor(ConsoleColor text, ConsoleColor background)
 {
+    HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hStdOut, (WORD)((background << 4) | text));
 }

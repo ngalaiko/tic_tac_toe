@@ -7,17 +7,20 @@ using namespace std;
 
 int main()
 {
+    system( "color F0" );
+    //переменная для считывания команды
     int p;
+    //указатель на базовый класс игр
     tic_tac_toe *game;
-    std::cout << std::endl << "Игра \"Крестики-Нолики\"" << std::endl;
+    std::cout << std::endl << "The \"Tic-Tac-Toe\" game" << std::endl;
     do
     {
-        std::cout << std::endl << "Меню:" << std::endl;
-        std::cout << "1. Низкий уровень сложности." << std::endl;
-        std::cout << "2. Средний уровень сложности." << std::endl;
-        std::cout << "3. Высокий уровень сложности." << std::endl;
-        std::cout << "4. Выход." << std::endl;
-        std::cout << std::endl << "Введите команду:" << std::endl;
+        std::cout << std::endl << "Menu:" << std::endl;
+        std::cout << "1. Easy." << std::endl;
+        std::cout << "2. Medium." << std::endl;
+        std::cout << "3. Hard." << std::endl;
+        std::cout << "4. Exit." << std::endl;
+        std::cout << std::endl << "Please, input option:" << std::endl;
         std::cin >> p;
         switch(p)
         {
@@ -34,10 +37,10 @@ int main()
             game->play();
             break;
         case 4:
-            std::cout << "Пока!" << std::endl;
+            std::cout << "Bye!" << std::endl;
             break;
         default:
-            std::cout << "Нет такого пункта!" << std::endl;
+            std::cout << "No such option!" << std::endl;
             break;
         }
     }
